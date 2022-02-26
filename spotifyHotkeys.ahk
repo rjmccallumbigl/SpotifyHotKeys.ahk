@@ -126,6 +126,25 @@ Launch_Media::
   addSongToPlaylist("id", "Starred3")
 Return
 
+; Alt + Media button shows the list of current hotkeys persistently (press another hoykey to clear, i.e. CTRL + Media_Play_Pause)
+!Launch_Media:: 
+  list := "* Shift + Media_Play_Pause adds the song to a playlist via menu to display all playlist options (you'll have to customize this part)"
+  list := list . "`n" . "* Media_Play_Pause toggles playback and shows Now Playing information in a tool tip"
+  list := list . "`n" . "* CTRL + Media_Play_Pause just gives Now Playing information in a tool tip"
+  list := list . "`n" . "* Shift + CTRL + Media_Play_Pause gives Now Playing information in a tool tip and pastes to clipboard"
+  list := list . "`n" . "* Media_Next shows song info when going to next track"
+  list := list . "`n" . "* CTRL + Next seeks forward ~10 seconds"
+  list := list . "`n" . "* Shift + Next seeks forward ~30 seconds"
+  list := list . "`n" . "* Next & Prev additionally show song info when going to next/previous track"
+  list := list . "`n" . "* CTRL + Prev seeks backwards ~10 seconds"
+  list := list . "`n" . "* Shift + Prev seeks backwards ~30 seconds"
+  list := list . "`n" . "* CTRL + Media button adds currently playing song to specified playlist(s) (you'll have to customize this part)"
+  list := list . "`n" . "* Shift + Media button adds currently playing song to specified playlist(s) (you'll have to customize this part)"
+  list := list . "`n" . "* CTRL + Shift + Media button adds currently playing song to specified playlist(s) (you'll have to customize this part)"
+  list := list . "`n" . "* Media button adds currently playing song to specified playlist(s) (you'll have to customize this part)"
+  ToolTip, %list%
+Return
+
 ; Helps display Tooltip
 TOOLTIP:
   ToolTip,
