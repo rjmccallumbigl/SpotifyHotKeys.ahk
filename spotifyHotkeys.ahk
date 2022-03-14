@@ -47,7 +47,7 @@ Return
 ; Shift + CTRL + Media_Play_Pause gives Now Playing information in a tool tip and pastes to clipboard
 ^+Media_Play_Pause:: 
   CurrentPlayback := spotifyObject.Player.GetCurrentPlaybackInfo()
-  clipboard:= showSongInfo(CurrentPlayback)
+  clipboard:= showSongInfo(CurrentPlayback) . "`n" . "Link: " . CurrentPlayback.item.external_urls.spotify
 Return
 
 ; Media_Next shows song info when going to next track
