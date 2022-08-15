@@ -48,6 +48,12 @@ Return
 ^+Media_Play_Pause:: 
   CurrentPlayback := spotifyObject.Player.GetCurrentPlaybackInfo()
   clipboard:= showSongInfo(CurrentPlayback) . "`n" . "Link: " . CurrentPlayback.item.external_urls.spotify
+  Return
+
+; Alt + Shift + CTRL + Media_Play_Pause gives Now Playing information in a tool tip and pastes artist(s) to clipboard
+^!+Media_Play_Pause::
+  CurrentPlayback := spotifyObject.Player.GetCurrentPlaybackInfo()
+  clipboard := Trim(returnArtist(CurrentPlayback))
 Return
 
 ; Media_Next shows song info when going to next track
@@ -132,6 +138,7 @@ Return
   list := list . "`n" . "* Media_Play_Pause toggles playback and shows Now Playing information in a tool tip"
   list := list . "`n" . "* CTRL + Media_Play_Pause just gives Now Playing information in a tool tip"
   list := list . "`n" . "* Shift + CTRL + Media_Play_Pause gives Now Playing information in a tool tip and pastes to clipboard"
+  list := list . "`n" . "* Alt + Shift + CTRL + Media_Play_Pause gives Now Playing information in a tool tip and pastes artists to clipboard"
   list := list . "`n" . "* Media_Next shows song info when going to next track"
   list := list . "`n" . "* CTRL + Next seeks forward ~10 seconds"
   list := list . "`n" . "* Shift + Next seeks forward ~30 seconds"
@@ -176,6 +183,21 @@ showSongInfo(CurrentPlayback)
   ToolTip,%songInfo%
   SetTimer,TOOLTIP,On 
 return songInfo
+}
+
+; Returns artist(s) of the current song
+returnArtist(CurrentPlayback)
+{
+  artistString := ""
+  for index, element in CurrentPlayback.Track.artists
+  {
+    artistString .= ", " . CurrentPlayback.Track.artists[index].name
+  }
+  artistString := substr(artistString,2)
+  songInfo := "Title: " CurrentPlayback.Track.Name " `nArtist: " artistString " `nAlbum: " CurrentPlayback.Track.album.name " `nProgress: " floor(CurrentPlayback.progress_ms/1000/60)":"floor(mod(CurrentPlayback.progress_ms/1000,60)) " - " floor(CurrentPlayback.Track.duration/1000/60)":"floor(mod(CurrentPlayback.Track.duration/1000,60))
+  ToolTip,%songInfo%
+  SetTimer,TOOLTIP,On
+return artistString
 }
 
 ; Build Spotify playlist menu
